@@ -1,8 +1,13 @@
 import React from 'react';
 import { ModalContainer } from './Modal.styles';
+import Aux from '../../../hoc/Aux.container';
+import Backdrop from '../Backdrop/Backdrop.component';
 
-const Modal = (props) => (
-  <ModalContainer show={props.show}>{props.children}</ModalContainer>
+const Modal = ({ show, children, modalClosed }) => (
+  <Aux>
+    <Backdrop show={show} clicked={modalClosed} />
+    <ModalContainer show={show}>{children}</ModalContainer>
+  </Aux>
 );
 
 export default Modal;
