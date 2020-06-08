@@ -6,11 +6,13 @@ import {
   LessButton,
 } from './BuildControl.styles';
 
-const BuildControl = ({ label }) => (
+const BuildControl = ({ label, added, removed, disabled }) => (
   <BuildControlContainer>
     <Label>{label}</Label>
-    <LessButton>Less</LessButton>
-    <MoreButton>More</MoreButton>
+    <LessButton onClick={removed} disabled={disabled}>
+      Less
+    </LessButton>
+    <MoreButton onClick={added}>More</MoreButton>
   </BuildControlContainer>
 );
 

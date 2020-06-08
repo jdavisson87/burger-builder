@@ -5,6 +5,7 @@ export const BurgerContainer = styled.div`
   margin: auto;
   height: 250px;
   text-align: center;
+  overflow: scroll;
   font-weight: bold;
   font-size: 1.2rem;
 
