@@ -15,6 +15,7 @@ const BuildControls = ({
   disabled,
   price,
   purchasable,
+  ordered,
 }) => (
   <BuildControlsContainer>
     <p>
@@ -29,7 +30,9 @@ const BuildControls = ({
         disabled={disabled[ctrl.type]}
       />
     ))}
-    <OrderNowButton disabled={!purchasable}>ORDER NOW</OrderNowButton>
+    <OrderNowButton disabled={!purchasable} onClick={ordered}>
+      ORDER NOW
+    </OrderNowButton>
   </BuildControlsContainer>
 );
 
