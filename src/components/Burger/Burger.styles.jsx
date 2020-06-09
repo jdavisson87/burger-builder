@@ -9,7 +9,7 @@ export const BurgerContainer = styled.div`
   font-weight: bold;
   font-size: 1.2rem;
 
-  @media (min-width: 500px) and (max-height: 400px) {
+  @media (min-width: 500px) and (min-height: 400px) {
     width: 350px;
     height: 300px;
   }
