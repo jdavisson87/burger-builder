@@ -1,13 +1,22 @@
 import React from 'react';
-import { ToolbarContainer } from './Toolebar.styles';
+import {
+  ToolbarContainer,
+  LogoContainer,
+  NavContainer,
+} from './Toolebar.styles';
 import Logo from '../../Logo/Logo.component';
 import NavigationItems from '../NavigationItems/NavigationItems.component';
+import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle.component';
 
 const Toolbar = (props) => (
   <ToolbarContainer>
-    <div>MENU</div>
-    <Logo />
-    <NavigationItems />
+    <DrawerToggle clickHandler={props.clickHandler} />
+    <LogoContainer>
+      <Logo />
+    </LogoContainer>
+    <NavContainer>
+      <NavigationItems />
+    </NavContainer>
   </ToolbarContainer>
 );
 

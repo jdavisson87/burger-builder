@@ -18,3 +18,13 @@ export const ToolbarContainer = styled.header`
     height: 100%;
   }
 `;
+
+export const LogoContainer = styled.div`
+  height: 80%;
+`;
+
+export const NavContainer = styled.nav`
+  @media (max-width: 499px) {
+    display: none;
+  }
+`;
