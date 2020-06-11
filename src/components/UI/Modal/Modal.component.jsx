@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ModalContainer } from './Modal.styles';
 import Aux from '../../../hoc/Aux.container';
 import Backdrop from '../Backdrop/Backdrop.component';
 
-const Modal = ({ show, children, modalClosed }) => (
-  <Aux>
-    <Backdrop show={show} clicked={modalClosed} />
-    <ModalContainer show={show}>{children}</ModalContainer>
-  </Aux>
-);
-
+class Modal extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.show !== this.props.show;
+  }
+  render() {
+    const { show, children, modalClosed } = this.props;
+    return (
+      <Aux>
+        <Backdrop show={show} clicked={modalClosed} />
+        <ModalContainer show={show}>{children}</ModalContainer>
+      </Aux>
+    );
+  }
+}
 export default Modal;
