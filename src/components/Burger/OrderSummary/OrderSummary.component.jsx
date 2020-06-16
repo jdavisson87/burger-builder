@@ -1,7 +1,7 @@
 import React from 'react';
 import { IngredientName } from './OrderSummary.styles';
 import CustomButton from '../../UI/CustomButton/CustomButton.component';
-import Aux from '../../../hoc/Aux.container';
+import Aux from '../../../hoc/Aux/Aux.container';
 
 const OrderSummary = ({ ingredients, onCancel, onContinue, totalPrice }) => {
   const ingredientSummary = Object.keys(ingredients).map((igKey) => {
