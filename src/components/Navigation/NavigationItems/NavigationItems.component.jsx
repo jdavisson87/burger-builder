@@ -5,9 +5,7 @@ import NavigationItem from './NavigationItem/NavigationItem.component';
 const NavigationItems = (props) => (
   <NavigationItemsContainer>
     <NavigationItem link="/">Burger Builder</NavigationItem>
-    <NavigationItem link="/" active>
-      Checkout
-    </NavigationItem>
+    <NavigationItem link="/orders">Orders</NavigationItem>
   </NavigationItemsContainer>
 );
 
