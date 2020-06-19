@@ -2,17 +2,79 @@ import React, { Component } from 'react';
 
 import CustomButton from '../../../components/UI/CustomButton/CustomButton.component';
 import axios from '../../../axios-orders';
+import CustomInput from '../../../components/UI/CustomInput/CustomInput.component';
 import Spinner from '../../../components/UI/Spinner/Spinner.component';
 
-import { ContactDataContainer, UserInputs } from './ContactData.styles';
+import { ContactDataContainer } from './ContactData.styles';
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: '',
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+      },
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Street Name',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Zip Code',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+      },
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: 'USA',
+        validation: {
+          required: true,
+        },
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your E-Mail',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+      },
+      deliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { value: 'fastest', displayValue: 'Fastest' },
+            { value: 'cheapest', displayValue: 'Cheapest' },
+          ],
+        },
+        value: '',
+      },
     },
     loading: false,
   };
@@ -21,19 +83,16 @@ class ContactData extends Component {
     event.preventDefault();
 
     this.setState({ loading: true });
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    }
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price, //not a setup you would use on a real app, you would want to recalculate the price
-      customer: {
-        name: 'Jeff Davisson',
-        address: {
-          street: 'Test Street',
-          zipcode: '77777',
-          country: 'USA',
-        },
-        email: 'test@test.com',
-      },
-      deliveryMethod: 'fastest',
+      price: this.props.price,
+      orderData: formData,
     };
     axios
       .post('/orders.json', order)
@@ -47,16 +106,35 @@ class ContactData extends Component {
     alert('You continue!');
   };
 
+  inputChangedHandler = (e, inputIdentifier) => {
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
+    updatedFormElement.value = e.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
+  };
+
   render() {
+    const formElementsArray = [];
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key],
+      });
+    }
     let form = (
-      <form>
-        <UserInputs type="text" name="name" placeholder="Your Name" />
-        <UserInputs type="text" name="email" placeholder="Your Email" />
-        <UserInputs type="text" name="street" placeholder="Street" />
-        <UserInputs type="text" name="postal" placeholder="Postal Code" />
-        <CustomButton btnType="success" clicked={this.orderHandler}>
-          ORDER
-        </CustomButton>
+      <form onSubmit={this.orderHandler}>
+        {formElementsArray.map((formElement) => (
+          <CustomInput
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+          />
+        ))}
+
+        <CustomButton btnType="success">ORDER</CustomButton>
       </form>
     );
     if (this.state.loading) {

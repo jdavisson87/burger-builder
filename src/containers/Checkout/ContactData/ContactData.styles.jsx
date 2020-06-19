@@ -12,7 +12,3 @@ export const ContactDataContainer = styled.div`
     width: 500px;
   }
 `;
-
-export const UserInputs = styled.input`
-  display: block;
-`;
