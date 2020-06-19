@@ -23,4 +23,9 @@ export const CustomButtonContainer = styled.button`
   }
 
   color: ${(props) => colors[props.btnType]};
+
+  &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
 `;

@@ -14,8 +14,8 @@ export const InputLabel = styled.label`
 
 export const InputElement = styled.input`
   outline: none;
-  border: 1px solid #ccc;
-  background-color: white;
+  border: ${(props) => (props.invalid ? '1px solid red' : '1px solid #ccc')};
+  background-color: ${(props) => (props.invalid ? 'salmon' : 'white')};
   font: inherit;
   padding: 6px 10px;
   display: block;

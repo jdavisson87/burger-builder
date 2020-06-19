@@ -2,13 +2,27 @@ import React from 'react';
 import { InputContainer, InputLabel, InputElement } from './CustomInput.styles';
 
 const CustomInput = (props) => {
-  let { label, elementType, elementConfig, value, changed } = props;
+  let {
+    label,
+    elementType,
+    elementConfig,
+    value,
+    changed,
+    invalid,
+    shouldValidate,
+    touched,
+  } = props;
   let inputElement = null;
 
   switch (elementType) {
     case 'input':
       inputElement = (
-        <InputElement {...elementConfig} value={value} onChange={changed} />
+        <InputElement
+          invalid={invalid && shouldValidate && touched}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
+        />
       );
       break;
     case 'textarea':
