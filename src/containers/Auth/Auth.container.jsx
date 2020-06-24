@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CustomInput from '../../components/UI/CustomInput/CustomInput.component';
 import CustomButton from '../../components/UI/CustomButton/CustomButton.component';
 import { AuthContainer } from './Auth.styles';
+import * as action from '../../store/actions/index';
 
 class Auth extends Component {
   state = {
@@ -36,6 +38,69 @@ class Auth extends Component {
         touched: false,
       },
     },
+    isSignUp: true,
+  };
+
+  checkValidity(value, rules) {
+    let isValid = true;
+    if (!rules) {
+      return true;
+    }
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    return isValid;
+  }
+
+  inputChangedHandler = (event, controlName) => {
+    const updatedControls = {
+      ...this.state.controls,
+      [controlName]: {
+        ...this.state.controls[controlName],
+        value: event.target.value,
+        valid: this.checkValidity(
+          event.target.value,
+          this.state.controls[controlName].validation
+        ),
+        touched: true,
+      },
+    };
+    this.setState({ controls: updatedControls });
+  };
+
+  submitHandler = (event) => {
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      this.state.isSignUp
+    );
+  };
+
+  switchAuthModeHandler = () => {
+    this.setState((prevState) => {
+      return { isSignUp: !prevState.isSignUp };
+    });
   };
 
   render() {
@@ -62,13 +127,23 @@ class Auth extends Component {
 
     return (
       <AuthContainer>
-        <form>
+        <form onSubmit={this.submitHandler}>
           {form}
           <CustomButton btnType="success">Submit</CustomButton>
+          <CustomButton btnType="danger" clicked={this.switchAuthModeHandler}>
+            SWITCH TO {this.state.isSignUp ? 'SIGNIN' : 'SIGNUP'}
+          </CustomButton>
         </form>
       </AuthContainer>
     );
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password, isSignUp) =>
+      dispatch(action.auth(email, password, isSignUp)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Auth);
