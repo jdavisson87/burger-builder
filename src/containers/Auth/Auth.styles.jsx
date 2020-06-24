@@ -13,3 +13,9 @@ export const AuthContainer = styled.div`
     width: 500px;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-weight: 900;
+  font-size: 20px;
+`;
