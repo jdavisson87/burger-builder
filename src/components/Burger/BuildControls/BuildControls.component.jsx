@@ -16,6 +16,7 @@ const BuildControls = ({
   price,
   purchasable,
   ordered,
+  isAuth,
 }) => (
   <BuildControlsContainer>
     <p>
@@ -31,7 +32,7 @@ const BuildControls = ({
       />
     ))}
     <OrderNowButton disabled={!purchasable} onClick={ordered}>
-      ORDER NOW
+      {isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
     </OrderNowButton>
   </BuildControlsContainer>
 );
