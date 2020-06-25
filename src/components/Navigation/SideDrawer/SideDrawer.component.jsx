@@ -10,7 +10,10 @@ const SideDrawer = (props) => {
   return (
     <Aux>
       <Backdrop show={props.open} clicked={props.closed} />
-      <SideDrawerContainer className={props.open ? 'Open' : 'Closed'}>
+      <SideDrawerContainer
+        className={props.open ? 'Open' : 'Closed'}
+        onClick={props.closed}
+      >
         <LogoContainer>
           <Logo />
         </LogoContainer>
