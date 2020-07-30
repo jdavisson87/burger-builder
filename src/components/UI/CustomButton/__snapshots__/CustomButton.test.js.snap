@@ -3,7 +3,7 @@
 exports[`snapshot 1`] = `
 <button
   data-testid="CustomButton"
-  class="sc-AxjAm iXVEia"
+  class="sc-AxjAm deHFux"
 >
   Testing
 </button>
